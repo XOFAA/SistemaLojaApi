@@ -15,7 +15,7 @@ module.exports = {
       qtd: {
         type: Sequelize.INTEGER
       },
-      categoria: {
+      categoriaId: {
         type: Sequelize.INTEGER,
         references:{
           model:{

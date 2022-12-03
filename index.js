@@ -15,8 +15,8 @@ app.use(cors())
 app.use(express.json())
 
 
-app.post('/login',AuthController.login)
-app.use('/',middlewareValidaJwt,routes)
+//app.post('/login',AuthController.login)
+app.use('/',routes)
 app.listen(porta,()=>{
     console.log('Servidor Iniciado com sucesso')
 })

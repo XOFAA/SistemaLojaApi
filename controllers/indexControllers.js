@@ -41,7 +41,7 @@ static async atualizarCategoria(req,res){
     try {
 
         const categorias = await Categoria.findByPk(req.params.id)
-
+        
         if(!categorias){
             res.status(400).json({
                 message:"Categoria não encotrada"
@@ -65,12 +65,19 @@ static async atualizarCategoria(req,res){
 }
 static async deletarCategoria(req,res){
     try {
-       
+       const produtos = await Produto.findAll()
+       if(produtos){
+        res.status(404).json({
+            message:("Não é possivel excluir categoria se já existir produtos.")
+        })
+       }else{
         const categorias = await Categoria.findByPk(req.params.id)
         categorias.destroy()
         res.status(200).json({
             message:"Categoria deletada com sucesso"
         })
+       }
+        
         
     } catch (error) {
         res.status(500).json({
@@ -100,7 +107,7 @@ static async cadastrarProduto(req,res){
             await Produto.create({
                 descricao:req.body.descricao,
                 qtd:req.body.qtd,
-                categoria:req.body.categoria
+                categoriaId:req.body.categoria
         
             })
        
@@ -127,7 +134,7 @@ static async atualizarProduto(req,res){
             produtos.update({
                 descricao:req.body.descricao,
                 qtd:req.body.qtd,
-                categoria:req.body.categoria
+                categoriaId:req.body.categoria
             })
             res.status(200).json({
                 message:"Produto Atualizado com sucesso"
